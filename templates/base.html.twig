@@ -13,25 +13,7 @@
         {% endblock %}
     </head>
     <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark px-3">
-            <a class="navbar-brand" href={{ path('app_home') }}>My Blog</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div  class="login-nav">
-                {% if app.user %}
-                    {# <a href={{ path('app_user_account') }}>Mon compte |</a><a href={{ path('app_logout') }}> Déconnexion</a> #}
-                    <a href={{ path('app_logout') }}> Déconnexion</a>
-                {% else %}
-                    {# <a href= {{ path('app_admin_login') }} class='btn btn-outline-primary'>Admin Access</a> #}
-                {% endif %}
-            </div>
-        </nav>
-         <div class="container mt-5">
         {% block body %}
-    
         {% endblock %}
-        </div>
     </body>
 </html>

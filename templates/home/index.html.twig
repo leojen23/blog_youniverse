@@ -3,26 +3,5 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-
- <h1>Hello Page d'accueil</h1>
-
-    {% if app.user  %} 
-         <div>
-            <p>Consutlez la liste de vos articles</p>
-            {# <a href={{ path('app_user_account') }} class="btn btn-primary" type="button">Voir mes articles</a> #}
-        </div>
-    {% else %} 
-
-    <div class="d-flex justify-content-start mt-5">
-        <div class="">
-            <p>Vous avez déja un compte ?</p>
-            <a href={{ path('app_login') }} class="btn btn-primary" type="button">Connexion</a>
-        </div>
-        <div class="mx-5">
-            <p>Vous souhaitez vous inscrire ?</p>
-            <a href={{ path('app_register') }}  class="btn btn-secondary" type="button">Inscription</a>
-        </div>
-    </div>
-        
-    {% endif %}
+<h1>This is the homePage</h1>
 {% endblock %}
