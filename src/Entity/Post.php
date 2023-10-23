@@ -20,6 +20,9 @@ class Post
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $createdAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,18 @@ class Post
     public function setContent(string $content): static
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
