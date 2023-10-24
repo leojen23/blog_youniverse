@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+
+ <h1>DashBoard administrateur</h1>
+
+    <div class="d-flex justify-content-start ">
+        <div class="mr-2">
+            <a href={{ path('app_login') }} class="btn btn-primary" type="button">Liste les utilisateurs</a>
+        </div>
+        <div class="mx-2">
+            <a href={{ path('app_admin_category_index') }}  class="btn btn-primary" type="button">Liste des catégories</a>
+        </div>
+        <div>
+            <a href={{ path('app_register') }}  class="btn btn-primary" type="button">Liste des articles</a>
+        </div>
+    </div>
+   
+{% endblock %}

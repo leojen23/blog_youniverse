@@ -16,8 +16,18 @@
          <nav class="navbar navbar-expand navbar-dark bg-dark px-4 d-flex justify-content-between">
             <a class="navbar-brand" href={{ path('app_home') }}>Mon Blog</a>
             {% if app.user %}
-                <a href={{ path('app_logout') }}> Déconnexion</a>
+
+                {% set adminRole = app.user.roles[0] %}
+
+                <div>
+                    {% if adminRole == "ROLE_ADMIN" %}
+                        <a class="btn btn-outline-light mx-2"href={{ path('app_logout') }}> Ajouter un administrateur</a>
+                    {% endif %}
+                    <a href={{ path('app_logout') }}> Déconnexion</a>
+                </div>
+               
             {% endif %}
+            
         </nav>
          <div class="container mt-5">
         {% block body %}

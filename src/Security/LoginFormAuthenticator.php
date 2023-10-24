@@ -48,8 +48,15 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
+        $userRole = $token->getUser()->getRoles();
+        if($userRole != ["ROLE_USER"]) {
+            return new RedirectResponse($this->urlGenerator->generate('app_admin_dashboard'));
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('app_home'));
+        }
+
        
-        return new RedirectResponse($this->urlGenerator->generate('app_home'));
+        
     }
 
     protected function getLoginUrl(Request $request): string
