@@ -13,22 +13,21 @@
         {% endblock %}
     </head>
     <body>
-         <nav class="navbar navbar-expand navbar-dark bg-dark px-4 d-flex justify-content-between">
+        {% if app.user == null %}
+            <nav class="navbar navbar-expand navbar-dark bg-dark px-4 d-flex justify-content-between">
             <a class="navbar-brand" href={{ path('app_home') }}>Mon Blog</a>
-            {% if app.user %}
-
-                {% set adminRole = app.user.roles[0] %}
-
-                <div>
-                    {% if adminRole == "ROLE_ADMIN" %}
-                        <a class="btn btn-outline-light mx-2"href={{ path('app_logout') }}> Ajouter un administrateur</a>
-                    {% endif %}
-                    <a href={{ path('app_logout') }}> Déconnexion</a>
-                </div>
-               
+            </nav>
+        {% else %}
+            <nav class="navbar navbar-expand navbar-dark bg-dark px-4 d-flex justify-content-between">
+            {% if "ROLE_ADMIN" in app.user.roles %}
+            <a class="navbar-brand" href={{ path('app_admin_dashboard') }}>Mon Blog</a>
+            {% else %}
+            <a class="navbar-brand" href={{ path('app_home') }}>Mon Blog</a>
             {% endif %}
-            
-        </nav>
+            <a href={{ path('app_logout') }}> Déconnexion</a>
+            </nav>
+        {% endif %}
+       
          <div class="container mt-5">
         {% block body %}
         
