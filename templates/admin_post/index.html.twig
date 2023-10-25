@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post index{% endblock %}
+
+{% block body %}
+    <h1>Liste des artciles</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Contenu</th>
+                <th>Catégorie</th>
+                <th>Date de création</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.content }}</td>
+                <td>{{ post.category.name}}</td>
+                <td>{{ post.createdAt ? post.createdAt|date('Y-m-d') : '' }}</td>
+                <td>
+                    <div class="d-flex">
+                        <a class="btn btn-primary " href="{{ path('app_admin_post_show', {'id': post.id}) }}">Consulter</a>
+                        <a class="btn btn-primary mx-1" href="{{ path('app_admin_post_edit', {'id': post.id}) }}">Modifier</a>
+                        {{ include('admin_post/_delete_form.html.twig') }}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun enregistrement </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('app_admin_post_new') }}">Créer un article</a>
+{% endblock %}

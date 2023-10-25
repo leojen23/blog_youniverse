@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post{% endblock %}
+
+{% block body %}
+    <h1>Post</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ post.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ post.title }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ post.content }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie</th>
+                <td>{{ post.category.name }}</td>
+            </tr>
+            <tr>
+                <th>Date de créatoin</th>
+                <td>{{ post.createdAt ? post.createdAt|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+<div class="d-flex ">
+
+    <a class="btn btn-primary mr-2" href="{{ path('app_admin_post_index') }}">Retour à la liste des articles</a>
+
+    <a class="btn btn-primary mx-2" href="{{ path('app_admin_post_edit', {'id': post.id}) }}">edit</a>
+
+    {{ include('admin_post/_delete_form.html.twig') }}
+</div>
+   
+{% endblock %}
