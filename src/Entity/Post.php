@@ -10,10 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
-    public function __construct()
-{
-    $this->createdAt = new \DateTimeImmutable();
-}
+//     public function __construct()
+// {
+//     $this->createdAt = new \DateTimeImmutable();
+// }
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -34,6 +34,9 @@ class Post
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?Category $category = null;
+
+    #[ORM\Column]
+    private ?\DateTime $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -96,6 +99,18 @@ class Post
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

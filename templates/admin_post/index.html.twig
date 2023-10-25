@@ -13,6 +13,7 @@
                 <th>Contenu</th>
                 <th>Catégorie</th>
                 <th>Date de création</th>
+                <th>Date de mise a jour</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,7 +24,8 @@
                 <td>{{ post.title }}</td>
                 <td>{{ post.content }}</td>
                 <td>{{ post.category.name}}</td>
-                <td>{{ post.createdAt ? post.createdAt|date('Y-m-d') : '' }}</td>
+                <td>{{ post.createdAt ? post.createdAt|date("Y-m-d H:i:s") : '' }}</td>
+                <td>{{ post.updatedAt? post.updatedAt|date("Y-m-d H:i:s") : '' }}</td>
                 <td>
                     <div class="d-flex">
                         <a class="btn btn-primary " href="{{ path('app_admin_post_show', {'id': post.id}) }}">Consulter</a>
