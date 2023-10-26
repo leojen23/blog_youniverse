@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/user')]
+#[Route('/admin/utilisateurs')]
 class AdminUserController extends AbstractController
 {
     #[Route('/', name: 'app_admin_user_index', methods: ['GET'])]
@@ -19,10 +19,11 @@ class AdminUserController extends AbstractController
     {
         return $this->render('admin_user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            'message' => '',
         ]);
     }
 
-    #[Route('/new', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
+    #[Route('/ajout', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -50,7 +51,7 @@ class AdminUserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_admin_user_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/modification', name: 'app_admin_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UserType::class, $user);
@@ -69,13 +70,28 @@ class AdminUserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, User $user, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($user);
-            $entityManager->flush();
+
+        $loggedUser = $this->getUser();
+        if ($loggedUser != $user) {
+            if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+                $entityManager->remove($user);
+                $entityManager->flush();
+            } 
+            return $this->redirectToRoute('app_admin_user_index', [
+            ], Response::HTTP_SEE_OTHER);
+        }
+        else {
+            $feedback = 'Vous ne pouvez pas supprimer votre propre compte';
+            
+            return $this->render('admin_user/index.html.twig', [
+                'message' => $feedback,
+                'users' => $userRepository->findAll(),
+                
+            ]);
         }
 
-        return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
+       
     }
 }

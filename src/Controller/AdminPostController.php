@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/post')]
+#[Route('/admin/articles')]
 class AdminPostController extends AbstractController
 {
     #[Route('/', name: 'app_admin_post_index', methods: ['GET'])]
@@ -24,40 +24,9 @@ class AdminPostController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_admin_post_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $post = new Post();
-        $form = $this->createForm(PostType::class, $post);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $post->setUser($this->getUser());
-            $post->setCreatedAt(new DateTimeImmutable('now'));
-            $post->setUpdatedAt(new DateTime('now'));
-            $entityManager->persist($post);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_admin_post_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('admin_post/new.html.twig', [
-            'post' => $post,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_admin_post_show', methods: ['GET'])]
-    public function show(Post $post): Response
-    {
-        return $this->render('admin_post/show.html.twig', [
-            'post' => $post,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_admin_post_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
-        // dd($post);
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 

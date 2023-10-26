@@ -28,7 +28,6 @@
                 <td>{{ post.updatedAt? post.updatedAt|date("Y-m-d H:i:s") : '' }}</td>
                 <td>
                     <div class="d-flex">
-                        <a class="btn btn-primary " href="{{ path('app_admin_post_show', {'id': post.id}) }}">Consulter</a>
                         <a class="btn btn-primary mx-1" href="{{ path('app_admin_post_edit', {'id': post.id}) }}">Modifier</a>
                         {{ include('admin_post/_delete_form.html.twig') }}
                     </div>
@@ -41,6 +40,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a class="btn btn-primary" href="{{ path('app_admin_post_new') }}">Créer un article</a>
 {% endblock %}
