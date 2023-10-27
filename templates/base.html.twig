@@ -15,7 +15,8 @@
     <body>
         {% if app.user == null %}
             <nav class="navbar navbar-expand navbar-dark bg-dark px-4 d-flex justify-content-between">
-            <a class="navbar-brand" href={{ path('app_home') }}>Mon Blog</a>
+                <a class="navbar-brand" href={{ path('app_home') }}>Mon Blog</a>
+                <a class="btn btn-outline-light" target="_blank" href={{ path('api_post') }}> POST API</a>
             </nav>
         {% else %}
             <nav class="navbar navbar-expand navbar-dark bg-dark px-4 d-flex justify-content-between">
