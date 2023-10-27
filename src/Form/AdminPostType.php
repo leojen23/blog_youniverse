@@ -4,16 +4,25 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Post;
-use Doctrine\ORM\EntityRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Symfony\Bridge\Doctrine\Form\ChoiceList\ORMQueryBuilderLoader;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PostType extends AbstractType
+class AdminPostType extends AbstractType
 {
+    private $categoryRepository;
+
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -21,16 +30,16 @@ class PostType extends AbstractType
             ->add('content')
             ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'query_builder' => function (EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er): ORMQueryBuilder {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.name', 'ASC');
                 },
                 'choice_label' => 'name',
             ]);
-            
-            // ->add('user')
-            // ->add('category')
+        
         ;
+        
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
