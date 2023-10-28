@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * @extends ServiceEntityRepository<Category>
@@ -20,6 +21,19 @@ class CategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Category::class);
     }
+
+
+    public function checkIfRecordExists(String $catName) {
+        $record = ['name' => $catName];
+        $entity = $this->findOneBy($record);
+        if ($entity !== null) {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+
 
 //    /**
 //     * @return Category[] Returns an array of Category objects

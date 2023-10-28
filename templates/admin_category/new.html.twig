@@ -3,7 +3,14 @@
 {% block title %}Admin - Categories{% endblock %}
 
 {% block body %}
+
     <h1>Ajouter une nouvelle catégorie</h1>
+
+    {% if message is defined%}
+    <div class="bg-danger text-light my-4 py-2">
+        <span>{{message}}</span>
+    </div>
+    {% endif %}
 
     {{ include('admin_category/_form.html.twig') }}
 

@@ -23,19 +23,28 @@ class AdminCategoryController extends AbstractController
     }
 
     #[Route('/ajout', name: 'app_admin_category_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($category);
-            $entityManager->flush();
+            $catString = $form->getData()->getName();
 
-            return $this->redirectToRoute('app_admin_category_index', [], Response::HTTP_SEE_OTHER);
+            if (!$categoryRepository->checkIfRecordExists($catString)){
+                $entityManager->persist($category);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_admin_category_index', [], Response::HTTP_SEE_OTHER);
+                
+            } else {
+                return $this->render('admin_category/new.html.twig', [
+                    'category' => $category,
+                    'form' => $form,
+                    'message' => 'Cette catégorie existe déjà !'
+                ]);
+            } 
         }
-
         return $this->render('admin_category/new.html.twig', [
             'category' => $category,
             'form' => $form,
@@ -50,7 +59,7 @@ class AdminCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_admin_category_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/modification', name: 'app_admin_category_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
@@ -68,7 +77,7 @@ class AdminCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/delete/{id}', name: 'app_admin_category_delete', methods: ['POST'])]
+    #[Route('/suppression/{id}', name: 'app_admin_category_delete', methods: ['POST'])]
     
     public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
