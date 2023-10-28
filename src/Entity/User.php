@@ -17,20 +17,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    /**
-     * @Groups({"post"})
-     */
     private ?int $id = null;
 
-    /**
-     * @Groups({"post"})
-     */
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    /**
-     * @Groups({"post"})
-     */
     #[ORM\Column]
     private array $roles = [];
 

@@ -19,7 +19,7 @@ class ListUsersCommand extends Command
 {
 
     private $em;
-    // protected static $defaultName = 'app:list-users';
+
 
     public function __construct(EntityManagerInterface $em)
     {
