@@ -2,8 +2,3 @@
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
     <button class="btn btn-primary {% if app.user.id == user.id  %} disabled {% endif %}">Supprimer</button>
 </form>
-
-
-{# {% if app.user.id === user.id  %}
-    
-{% endif %} #}

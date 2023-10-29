@@ -32,7 +32,8 @@ class Post
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'posts')]
+    #[ORM\ManyToOne(inversedBy: 'posts'), ]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
 
     #[ORM\Column]
