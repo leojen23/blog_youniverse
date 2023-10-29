@@ -2,9 +2,12 @@
 
 namespace App\Security;
 
+use App\Services\MailService;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
@@ -21,9 +24,11 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
+    private MailService $mailService;
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, MailService $mailService)
     {
+        $this->mailService = $mailService;
     }
 
     public function authenticate(Request $request): Passport
@@ -47,9 +52,11 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-
-        $userRole = $token->getUser()->getRoles();
+        $user = $token->getUser();
+        $userRole = $user->getRoles();
         if($userRole != ["ROLE_USER"]) {
+            //TODO --------> send an email to notify that an admin logged in
+            $this->mailService->sendAdminConnexionEmail($user);
             return new RedirectResponse($this->urlGenerator->generate('app_admin_dashboard'));
         } else {
             return new RedirectResponse($this->urlGenerator->generate('app_home'));
