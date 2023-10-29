@@ -19,7 +19,6 @@ class SecurityController extends AbstractController
             } else {
                 return $this->redirectToRoute('app_user_account');
             }
-            
         }
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();

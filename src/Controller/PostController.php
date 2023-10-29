@@ -20,14 +20,12 @@ class PostController extends AbstractController
     #[Route('/', name: 'app_post_index', methods: ['GET'])]
     public function index(PostRepository $postRepository, Request $request, PaginatorInterface $paginator): Response
     {
-
         $user = $this->getUser();
         $pagination = $paginator->paginate(
             $postRepository->userPaginationQuery($user),
             $request->query->get('page', 1),
             2
         );
-// dd($pagination->getData());
         return $this->render('post/index.html.twig', [
             'pagination' => $pagination,
             'postCount' => $pagination
