@@ -15,7 +15,7 @@
     <body>
         {% if app.user == null %}
             <nav class="navbar navbar-expand navbar-dark bg-dark px-4 d-flex justify-content-between">
-                <a class="navbar-brand" href={{ path('app_home') }}>Mon Blog</a>
+                <a class="navbar-brand" href={{ path('app_home') }}>Accueil</a>
                 <div class="d-flex gap-3">
                     <a href={{ path('app_login') }} class="btn btn-primary" type="button">Connexion</a>
                     <a class="btn btn-outline-light" target="_blank" href={{ path('api_post') }}> POST API</a>
@@ -27,7 +27,7 @@
                 {% if "ROLE_ADMIN" in app.user.roles %}
                 <a class=" link-opacity-100" href={{ path('app_admin_dashboard') }}>Admin DashBoard</a>
                 {% else %}
-                <a class="navbar-brand" href={{ path('app_home') }}>Mon Blog</a>
+                <a class="navbar-brand" href={{ path('app_home') }}>Mon compte</a>
                 {% endif %}
                 <div>
                     <span class="text-light mx-2">Connected user : {{app.user.email}}</span>
