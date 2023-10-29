@@ -36,19 +36,24 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           
             $user = $form->getData();
             $search_email = $entityManager->getRepository(User::class)->findOneByEmail($user->getEmail());
             if ($search_email) {
                 $notification ='Il existe déjà un compte utilisateur créé avec cette adresse : ' . $user->getEmail();
             } else {
                  // encode the plain password
+                $isAdmin = $form['isAdmin']->getData();
                 $user->setPassword(
                     $userPasswordHasher->hashPassword(
                         $user,
                         $form->get('plainPassword')->getData()
                     )
                 );
+                
+                if ($isAdmin) {
+                    $user->setRoles(["ROLE_ADMIN"]);
+                }
+                
                 $entityManager->persist($user);
                 $entityManager->flush();
                 $notification ='Votre compte a été enregistré avec succes !';
