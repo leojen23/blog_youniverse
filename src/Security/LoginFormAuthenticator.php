@@ -59,7 +59,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             $this->mailService->sendAdminConnexionEmail($user);
             return new RedirectResponse($this->urlGenerator->generate('app_admin_dashboard'));
         } else {
-            return new RedirectResponse($this->urlGenerator->generate('app_home'));
+            return new RedirectResponse($this->urlGenerator->generate('app_user_account'));
         }
 
        

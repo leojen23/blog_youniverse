@@ -7,11 +7,12 @@
 
 
     {% if app.user  %} 
-     <h1>Bienvenue sur votre compte utilisateur: {{app.user.email}}</h1>
+     {# <h1>Bienvenue sur votre compte utilisateur: {{app.user.email}}</h1>
          <div>
             <p>Consutlez la liste de vos articles</p>
             <a href={{ path('app_post_index') }} class="btn btn-primary" type="button">Voir mes articles</a>
-        </div>
+        </div> #}
+        <div>appuser</div>
     {% else %} 
     <h1>Bienvenue sur votre page d'accueil</h1>
     <div class="d-flex justify-content-start mt-5">

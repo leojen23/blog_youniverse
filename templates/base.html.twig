@@ -20,14 +20,13 @@
                     <a href={{ path('app_login') }} class="btn btn-primary" type="button">Connexion</a>
                     <a class="btn btn-outline-light" target="_blank" href={{ path('api_post') }}> POST API</a>
                 </div>
-                
             </nav>
         {% else %}
             <nav class="navbar navbar-expand navbar-dark bg-dark px-4 d-flex justify-content-between">
                 {% if "ROLE_ADMIN" in app.user.roles %}
                 <a class=" link-opacity-100" href={{ path('app_admin_dashboard') }}>Admin DashBoard</a>
                 {% else %}
-                <a class="navbar-brand" href={{ path('app_home') }}>Mon compte</a>
+                <a class="navbar-brand" href={{ path('app_user_account') }}>Mon compte</a>
                 {% endif %}
                 <div>
                     <span class="text-light mx-2">Connected user : {{app.user.email}}</span>
