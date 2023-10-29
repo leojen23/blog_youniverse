@@ -50,11 +50,11 @@ class RegistrationFormType extends AbstractType
                 $builder->add('isAdmin', CheckboxType::class, [
                     'mapped' => false,
                     'required' => false,
-                    'constraints' => [
-                        new IsTrue([
-                            'message' => 'You should agree to our terms.',
-                        ]),
-                    ],
+                    // 'constraints' => [
+                    //     new IsTrue([
+                    //         'message' => 'You should agree to our terms.',
+                    //     ]),
+                    // ],
                 ]);
             }
         ;

@@ -8,6 +8,7 @@ use App\Repository\PostRepository;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,13 +18,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     #[Route('/', name: 'app_post_index', methods: ['GET'])]
-    public function index(PostRepository $postRepository): Response
+    public function index(PostRepository $postRepository, Request $request, PaginatorInterface $paginator): Response
     {
 
+        $user = $this->getUser();
+        $pagination = $paginator->paginate(
+            $postRepository->userPaginationQuery($user),
+            $request->query->get('page', 1),
+            2
+        );
+// dd($pagination->getData());
         return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findBy([
-                'user' => $this->getUser()
-            ]),
+            'pagination' => $pagination,
+            'postCount' => $pagination
         ]);
     }
 
