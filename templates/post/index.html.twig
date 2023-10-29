@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des articles{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex justify-content-between">
+        <h1>Liste des articles</h1>
+        <div>
+            <a class="btn btn-dark" href="{{ path('app_post_new') }}">Ajouter un article</a>
+        </div>
+    </div>
+    <small>Nombre d'articles <span class="badge bg-primary">{{ pagination.getTotalItemCount}}</span></small>
+   
+    <div class="d-flex gap-3 flex-column mt-3 ">
+    {% for post in pagination %}
+        <div class="card">
+            <div class="card-header">
+               <div class="d-flex justify-content-between">
+                     <small>Crée le : {{ post.createdAt ? post.createdAt|format_datetime('short', 'none', locale='fr') : '' }}</small>
+                    <small>Modifié le : {{ post.updatedAt ? post.updatedAt|format_datetime('full', 'short', locale='fr') : '' }}</small>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <small>{{post.category.name}}</small>
+                </div>
+                <p class="card-text">{{ post.content }}</p>
+            </div>
+            <div class="card-footer">
+               <div class="d-flex justify-content-end">
+                    <a class="btn btn-primary mx-1" href="{{ path('app_post_show', {'id': post.id}) }}">Consulter</a>
+                    <a class="btn btn-primary mx-1" href="{{ path('app_post_edit', {'id': post.id}) }}">Modifier</a>
+                    {{ include('post/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+         
+    {% else %}
+            <div class=" alert alert-primary d-flex justify-content-center">
+                <span colspan="5">Aucun enregistrement</span>
+            </div>
+    {% endfor %}
+  
+
+    {% if pagination.getTotalItemCount > 2 %}
+        <nav class="mt-3 alert alert-primary d-flex justify-content-center">
+            {{ knp_pagination_render(pagination)}}
+        </nav>
+    {% endif %}
+        
+     </div>
+{% endblock %}

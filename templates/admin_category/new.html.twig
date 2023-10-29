@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Categories{% endblock %}
+
+{% block body %}
+
+    <h1>Ajouter une nouvelle catégorie</h1>
+
+    {% if message is defined %}
+    <div class="alert alert-danger" role="alert">
+        <span>{{message}}</span>
+    </div>
+    {% endif %}
+
+    {{ include('admin_category/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_category_index') }}">Retour à la liste</a>
+{% endblock %}

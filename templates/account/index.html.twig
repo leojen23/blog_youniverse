@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+     <h1>Bienvenue sur votre compte utilisateur: {{app.user.email}}</h1>
+         <div>
+            <p>Consutlez la liste de vos articles</p>
+            <a href={{ path('app_post_index') }} class="btn btn-primary" type="button">Voir mes articles</a>
+        </div>
+</div>
+{% endblock %}

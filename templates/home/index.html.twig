@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    {% if app.user  %} 
+     <h1>Bienvenue sur votre compte : {{app.user.email}}</h1>
+         <div>
+            <p>Consutlez la liste de vos articles</p>
+            <a href={{ path('app_post_index') }} class="btn btn-primary" type="button">Voir mes articles</a>
+        </div>
+    {% else %} 
+    <h1>Bienvenue sur votre page d'accueil</h1>
+    <div class="d-flex justify-content-start mt-5">
+        <div class="">
+            <p>Vous avez déja un compte ?</p>
+            <a href={{ path('app_login') }} class="btn btn-primary" type="button">Connexion</a>
+        </div>
+        <div class="mx-5">
+            <p>Vous souhaitez vous inscrire ?</p>
+            <a href={{ path('app_register') }}  class="btn btn-secondary" type="button">Inscription</a>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

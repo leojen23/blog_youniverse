@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier votre catégorie{% endblock %}
+
+{% block body %}
+    <h1>Modifier votre catégorie</h1>
+    {{ include('admin_category/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    <a href="{{ path('app_admin_category_index') }}">Retour à la liste</a>
+{% endblock %}

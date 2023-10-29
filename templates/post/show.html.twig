@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post{% endblock %}
+
+{% block body %}
+    <h1>{{post.title}}</h1>
+  
+    <div class="d-flex justify-content-between">
+        <span>Crée le : {{ post.createdAt ? post.createdAt|format_datetime('short', 'none', locale='fr') : '' }}</span>
+       <span>Modifié le : {{ post.updatedAt ? post.updatedAt|format_datetime('full', 'short', locale='fr') : '' }}</span>
+    </div>
+    <hr>
+    <div class="post-content">
+        {{ post.content }}
+    </div>
+    <div class="actions d-flex mt-5 gap-2">
+        <a class="btn btn-primary" href="{{ path('app_post_edit', {'id': post.id}) }}">Modifier</a>
+        {{ include('post/_delete_form.html.twig') }}
+        <a  href="{{ path('app_post_index') }}">Retour à la liste</a>
+    </div>
+{% endblock %}
