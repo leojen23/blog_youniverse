@@ -6,11 +6,10 @@
     <h1>Liste des utilisateurs</h1>
 
    {% if message is not empty %}
-    <span class="error-message bg-danger my-5 p-2 text-light">
+    <div class="alert alert-danger" role="alert">
         {{message}} 
-    </span>
+    </div>
    {% endif %}
-    
 
     <table class="table">
         <thead>

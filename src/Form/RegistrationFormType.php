@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class RegistrationFormType extends AbstractType
 
 {
-     /**
+    /**
     * @var AuthorizationCheckerInterface
     */
     private $authorizationChecker=null;
